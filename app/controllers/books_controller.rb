@@ -4,18 +4,17 @@ class BooksController < ApplicationController
   end
 
   def index
-  	@books = Book.all
+  	@books = Book.all.order(created_at: :desc)
   	@book = Book.new
   end
 
   def create
-  	 book = Book.new(book_params)
-      if book.save
-      flash[:notice] = "Book was successgully created."
-      redirect_to book_path(book)
+  	 @book = Book.new(book_params)
+      if @book.save
+      flash[:notice] = "Book was successfully created."
+      redirect_to book_path(@book)
     else
       @books = Book.all
-      @book = Book.new(book_params)
       render :index
     end
   end
